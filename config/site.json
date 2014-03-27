@@ -1,0 +1,8 @@
+{
+	"Protocol" : "http",
+	"Domain" : "ogrebreak.com",
+	"AccessPath" : "/access/",
+	"AccessAddress" : "ogrebreak.com:9100",
+	
+	"ListenAddress" : "127.0.0.1:9100"
+}
