@@ -1,3 +1,2 @@
 User-agent:*
 Disallow: /access/
-Allow: /access/org/golang/db.a/

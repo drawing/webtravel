@@ -25,8 +25,16 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	home.Execute(w, SiteConfig)
 }
 
+func RobotsHandler(w http.ResponseWriter, r *http.Request) {
+	robots, err := template.ParseFiles("./template/robots.txt")
+	if err != nil {
+		panic(err)
+	}
+	robots.Execute(w, SiteConfig)
+}
+
 func HookHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "javascript/hook.js" {
+	if r.URL.Path != "/javascript/hook.js" {
 		http.NotFound(w, r)
 		return
 	}
@@ -112,6 +120,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", HomeHandler)
+	http.HandleFunc("/robots.txt", RobotsHandler)
 	http.HandleFunc("/access/", TravelHandler)
 	http.HandleFunc("/javascript/", HookHandler)
 	http.HandleFunc("/proxy.php", ProxyHandler)

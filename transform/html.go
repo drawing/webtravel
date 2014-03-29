@@ -17,6 +17,7 @@ var c_link_attrs = map[string]bool{
 	"action": true, "archive": true, "background": true, "cite": true, "classid": true,
 	"codebase": true, "data": true, "href": true, "longdesc": true, "profile": true, "src": true,
 	"usemap": true,
+	"sprite":true,
 	// Not standard:
 	"dynsrc": true, "lowsrc": true,
 }
