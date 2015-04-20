@@ -3,8 +3,8 @@ package main
 import (
 	"crypto/tls"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 	"text/template"
@@ -69,11 +69,11 @@ func TravelHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := transform.ModifyRequest(r, &g_transform)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		http.Redirect(w, r, "/", 404)
 		return
 	}
-	fmt.Println("REQ_URL:", r.URL)
+	log.Println("REQ_URL:", r.URL)
 
 	tr := http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -81,12 +81,12 @@ func TravelHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := tr.RoundTrip(r)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		http.Redirect(w, r, "/", 404)
 		return
 	}
 
-	// fmt.Println("RESP_CODE: ", resp.StatusCode)
+	// log.Println("RESP_CODE: ", resp.StatusCode)
 
 	body := transform.ModifyRespBody(resp, base_url, &g_transform)
 	transform.ModifyResponse(resp, base_url, &g_transform)
@@ -115,7 +115,7 @@ func main() {
 
 	err = g_transform.Init(SiteConfig["FullURI"].(string))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 
@@ -125,5 +125,6 @@ func main() {
 	http.HandleFunc("/javascript/", HookHandler)
 	http.HandleFunc("/proxy.php", ProxyHandler)
 
+	log.Println("Start Running @", SiteConfig["ListenAddress"], "...")
 	http.ListenAndServe(SiteConfig["ListenAddress"].(string), nil)
 }

@@ -7,7 +7,7 @@ import (
 )
 
 import (
-	"code.google.com/p/go.net/html"
+	"golang.org/x/net/html"
 )
 import (
 	"../ecmascript"
@@ -17,7 +17,7 @@ var c_link_attrs = map[string]bool{
 	"action": true, "archive": true, "background": true, "cite": true, "classid": true,
 	"codebase": true, "data": true, "href": true, "longdesc": true, "profile": true, "src": true,
 	"usemap": true,
-	"sprite":true,
+	"sprite": true,
 	// Not standard:
 	"dynsrc": true, "lowsrc": true,
 }
