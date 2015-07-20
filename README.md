@@ -5,9 +5,9 @@ VPN(虚拟专用网络)利用加密通信，在公共网络上建立专用网络
 
 webtravel 实现通过 SSL 协议访问后端服务的代理技术。其原理如下：
 
-1、客户端浏览器通过访问代理地址 `https://proxy.com/baidu.com`
-2、服务器收到 /baidu.com 的请求时，访问 `baidu.com`，把返回的html数据返回给客户端。
-3、从baidu.com返回的html数据包含很多图片，css，js信息，如 `http://www.baidu.com/img/bdlogo.gif`，如果把html不加更改的返回客户端，浏览器就会从`baidu.com/img/bdlogo.gif`获取图片，撇开了 proxy.com，所以服务器端必须修改html，把其中的链接改为 `https://proxy.com/baidu.com/img/bdlogo.gif`。
+* 客户端浏览器通过访问代理地址 `https://proxy.com/baidu.com`
+* 服务器收到 /baidu.com 的请求时，访问 `baidu.com`，把返回的html数据返回给客户端。
+* 从baidu.com返回的html数据包含很多图片，css，js信息，如 `http://www.baidu.com/img/bdlogo.gif`，如果把html不加更改的返回客户端，浏览器就会从`baidu.com/img/bdlogo.gif`获取图片，撇开了 proxy.com，所以服务器端必须修改html，把其中的链接改为 `https://proxy.com/baidu.com/img/bdlogo.gif`。
 
 其中除了html中的链接，还包括js，css中的链接，以及客户端js拼接的地址。当然，其中还需要修改http头中的cookie、referer等信息。webtravel 实现了重要逻辑的修改，可访问twitter，webqq等复杂应用。
 
