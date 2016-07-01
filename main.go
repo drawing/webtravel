@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -88,7 +89,15 @@ func TravelHandler(w http.ResponseWriter, r *http.Request) {
 
 	// log.Println("RESP_CODE: ", resp.StatusCode)
 
-	body := transform.ModifyRespBody(resp, base_url, &g_transform)
+	err = transform.ModifyRespBody(resp, base_url, &g_transform)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/", 500)
+		return
+	}
+
+	defer resp.Body.Close()
+
 	transform.ModifyResponse(resp, base_url, &g_transform)
 
 	for k, v := range resp.Header {
@@ -98,7 +107,7 @@ func TravelHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(resp.StatusCode)
-	w.Write(body)
+	io.Copy(w, resp.Body)
 }
 
 func main() {

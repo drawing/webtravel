@@ -1,6 +1,7 @@
 package transform
 
 import (
+	"bytes"
 	"compress/gzip"
 	"fmt"
 	"io/ioutil"
@@ -70,9 +71,9 @@ func ModifyResponse(resp *http.Response, base_url string, t *Transform) error {
 	return nil
 }
 
-func ModifyRespBody(resp *http.Response, base_url string, t *Transform) []byte {
-	var body []byte
+func ModifyRespBody(resp *http.Response, base_url string, t *Transform) error {
 	ctype := ""
+	var body []byte
 
 	if strings.Contains(resp.Header.Get("Content-Type"), "text/html") {
 		ctype = "html"
@@ -82,9 +83,12 @@ func ModifyRespBody(resp *http.Response, base_url string, t *Transform) []byte {
 		ctype = "css"
 	} else if strings.Contains(resp.Header.Get("Content-Type"), "javascript") {
 		ctype = "javascript"
+	} else {
+		return nil
 	}
 
 	defer resp.Body.Close()
+
 	if resp.Header.Get("Content-Encoding") == "gzip" {
 		gr, err := gzip.NewReader(resp.Body)
 		if err != nil {
@@ -114,5 +118,7 @@ func ModifyRespBody(resp *http.Response, base_url string, t *Transform) []byte {
 		body, _ = t.ProcessJS(base_url, body)
 	}
 
-	return body
+	resp.Body = ioutil.NopCloser(bytes.NewReader(body))
+
+	return nil
 }
