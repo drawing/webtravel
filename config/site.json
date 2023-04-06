@@ -1,8 +1,8 @@
 {
 	"Protocol" : "http",
-	"Domain" : "ogrebreak.com",
+	"Domain" : "webtravel.fancymore.com",
 	"AccessPath" : "/access/",
-	"AccessAddress" : "ogrebreak.com:9100",
+	"AccessAddress" : "webtravel.fancymore.com:8080",
 	
-	"ListenAddress" : "127.0.0.1:9100"
+	"ListenAddress" : "0.0.0.0:8080"
 }

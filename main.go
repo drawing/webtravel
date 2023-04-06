@@ -9,8 +9,9 @@ import (
 	"net/http"
 	"strings"
 	"text/template"
+	"flag"
 
-	"./transform"
+	"github.com/drawing/webtravel/transform"
 )
 
 import _ "net/http/pprof"
@@ -111,7 +112,13 @@ func TravelHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	buffer, err := ioutil.ReadFile("./config/site.json")
+	ConfigFile := flag.String("config", "./config/site.json", "Config File Path")
+
+	flag.Parse()
+
+	log.Println("read config file:", *ConfigFile)
+
+	buffer, err := ioutil.ReadFile(*ConfigFile)
 	if err != nil {
 		panic(err)
 	}

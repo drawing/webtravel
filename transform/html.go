@@ -10,7 +10,7 @@ import (
 	"golang.org/x/net/html"
 )
 import (
-	"../ecmascript"
+	"github.com/drawing/webtravel/ecmascript"
 )
 
 var c_link_attrs = map[string]bool{
